@@ -5,6 +5,9 @@ from datetime import date
 from django.conf import settings
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from . import serializers as serial
+from django.http import JsonResponse
+from rest_framework.response import Response
 
 # Create your views here.
 class Automate_event_mail(generics.ListAPIView):
@@ -22,6 +25,7 @@ class Automate_event_mail(generics.ListAPIView):
                 recipient_list = [employee.email_id]
 
                 send_mail(subject, '', from_email, recipient_list, html_message=html_message)
+
             else:
                 subject = 'Happy Anniversary!'
                 html_message = render_to_string('anniversary_template.html', {'emp_name': employee.name})
@@ -30,4 +34,5 @@ class Automate_event_mail(generics.ListAPIView):
 
                 send_mail(subject, '', from_email, recipient_list, html_message=html_message)
         return employees
+
 
